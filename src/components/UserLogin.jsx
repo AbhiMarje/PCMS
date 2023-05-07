@@ -20,7 +20,7 @@ const UserLogin = () => {
             .then((userCredential) => {
                     const user = userCredential.user
                     console.log(user)
-                    navigate('/fileComplaint')
+                    navigate('/fileComplaint', {state: {uid: user.uid}});
             })
             .catch((error) => {
                     alert(error.message)
@@ -32,7 +32,7 @@ const UserLogin = () => {
 
   return (
     <div>
-       <NavBar />
+       <NavBar title = {"User Login"}/>
         <div className='vh-100 vw-100 d-flex justify-content-center'>
             <div className='w-25 mt-5'>
                 <form>

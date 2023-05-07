@@ -50,7 +50,7 @@ const UserRegistration = () => {
 
   return (
     <div>
-        <NavBar />
+        <NavBar title = {"User Registration"}/>
         <div className='vh-100 vw-100 d-flex justify-content-center'>
         <div className='w-25 mt-5 '>
             <form>
