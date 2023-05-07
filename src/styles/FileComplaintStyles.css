@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    margin-left: 0px !important;
+}
+
+.formDiv {
+
+    width: 40%;
+    width: 50%;
+    float: left;
+    padding: 2rem;
+}
+
+.pendingApprovalDiv {
+    padding: 2rem;
+    width: 50%;
+    background-color: rgb(56, 54, 54);
+    height: 100vh;
+    float: right;
+    color: white;
+}
