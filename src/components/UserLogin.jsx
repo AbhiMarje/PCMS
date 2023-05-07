@@ -20,7 +20,7 @@ const UserLogin = () => {
             .then((userCredential) => {
                     const user = userCredential.user
                     console.log(user)
-                    navigate('/officerRegistration')
+                    navigate('/fileComplaint')
             })
             .catch((error) => {
                     alert(error.message)

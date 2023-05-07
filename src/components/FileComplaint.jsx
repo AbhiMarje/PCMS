@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
 import '../styles/FileComplaintStyles.css'
 import PendingComplaints from './PendingComplaints';
+import NavBar from './NavBar';
+import { useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react";
+import toast from "react-hot-toast";
 
 const FileComplaint = () => {
 
@@ -14,9 +15,12 @@ const FileComplaint = () => {
     const [time, setTime] = useState("");
     const [place, setPlace] = useState("");
 
+    const { contract } = useContract("0x0548DCc6e4E513008cBb62E93FD7EE3a63B470E3");
+    const { data: nextId } = useContractRead(contract, "nextId")
+    const { mutateAsync: fileComplaint } = useContractWrite(contract, "fileComplaint");
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(loginDetails.name);
     }
 
     const loginDetails = {
@@ -56,14 +60,7 @@ const FileComplaint = () => {
 
   return (
     <>
-        <Navbar bg="dark" variant="dark">
-            <Container>
-            <Navbar.Brand href="#home">
-                File Complaint  
-            </Navbar.Brand>
-            </Container>
-        </Navbar>
-
+        <NavBar />
         <div className='mainDiv'>
             <Form className='formDiv'>
                 <Form.Group className="mb-3" controlId="formBasicTitle">

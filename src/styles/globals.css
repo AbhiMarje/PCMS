@@ -29,3 +29,7 @@ button:hover, a:hover {
 input[type="date"]::-webkit-calendar-picker-indicator { 
   color-scheme: light;
 }
+
+input[type="time"]::-webkit-calendar-picker-indicator { 
+  color-scheme: light;
+}
