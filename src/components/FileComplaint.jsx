@@ -14,8 +14,6 @@ const FileComplaint = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [userId, setUserId] = useState("");
-
-
     const [userLoginDetails, setUserLoginDetails] = useState({
         aadhaar: "",
         address:"",
@@ -27,7 +25,6 @@ const FileComplaint = () => {
         station:"",
         uid:""
     });
-
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
@@ -37,21 +34,6 @@ const FileComplaint = () => {
     const { contract } = useContract("0x0548DCc6e4E513008cBb62E93FD7EE3a63B470E3");
     const { data: nextId } = useContractRead(contract, "nextId")
     const { mutateAsync: fileComplaint } = useContractWrite(contract, "fileComplaint");
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
-
-    const loginDetails = {
-        aadhaar : "123456",
-        address : "harugeri",
-        dob: "2001-01-20",
-        email: "abhi@gmail.com",
-        gender: "m",
-        name : "abhi",
-        phone: "123456789",
-        station: "harugeri",
-    }
 
     const pendingComplaintsList = [
         {
@@ -103,41 +85,18 @@ const FileComplaint = () => {
 
     }, [userId]);
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(userLoginDetails.name);
     }
+
 
     return (
         <>
             <NavBar title={"File Complaint"} />
             <div className='mainDiv'>
                 <Form className='formDiv'>
-                    <Form.Group className="mb-3" controlId="formBasicTitle">
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicDescription">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicDate">
-                        <Form.Label>Date</Form.Label>
-                        <Form.Control type="date" value={date} onChange={(e) => { setDate(e.target.value) }} />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicTime">
-                        <Form.Label>Time</Form.Label>
-                        <Form.Control type="time" value={time} onChange={(e) => { setTime(e.target.value) }} />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicPlace">
-                        <Form.Label>Place</Form.Label>
-                        <Form.Control type="text" placeholder='Enter place' value={place} onChange={(e) => { setPlace(e.target.value) }} />
-                    </Form.Group>
-
                     <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label>Name</Form.Label>
                         <Form.Control type="text" value={userLoginDetails.name} disabled={true} />
@@ -161,6 +120,31 @@ const FileComplaint = () => {
                     <Form.Group className="mb-3" controlId="formBasicStation">
                         <Form.Label>Station</Form.Label>
                         <Form.Control type="text" value={userLoginDetails.station} disabled={true} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicTitle">
+                        <Form.Label>Title</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicDescription">
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicDate">
+                        <Form.Label>Date</Form.Label>
+                        <Form.Control type="date" value={date} onChange={(e) => { setDate(e.target.value) }} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicTime">
+                        <Form.Label>Time</Form.Label>
+                        <Form.Control type="time" value={time} onChange={(e) => { setTime(e.target.value) }} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicPlace">
+                        <Form.Label>Place</Form.Label>
+                        <Form.Control type="text" placeholder='Enter place' value={place} onChange={(e) => { setPlace(e.target.value) }} />
                     </Form.Group>
 
                     <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>
