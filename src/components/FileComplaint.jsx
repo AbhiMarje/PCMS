@@ -5,9 +5,10 @@ import '../styles/FileComplaintStyles.css'
 import PendingComplaints from './PendingComplaints';
 import { useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react";
 import NavBar from './NavBar';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { db } from './FirebaseInit';
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import toast from 'react-hot-toast';
 
 const FileComplaint = () => {
 
@@ -23,7 +24,8 @@ const FileComplaint = () => {
         name:"",
         phone:"",
         station:"",
-        uid:""
+        uid:"",
+        complaints: []
     });
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -31,7 +33,7 @@ const FileComplaint = () => {
     const [time, setTime] = useState("");
     const [place, setPlace] = useState("");
 
-    const { contract } = useContract("0x0548DCc6e4E513008cBb62E93FD7EE3a63B470E3");
+    const { contract } = useContract("0xA7245838b0018AFCDE70589E8Bf3aC7730De0309");
     const { data: nextId } = useContractRead(contract, "nextId")
     const { mutateAsync: fileComplaint } = useContractWrite(contract, "fileComplaint");
 
@@ -61,7 +63,7 @@ const FileComplaint = () => {
 
 
     useEffect(() => {
-        if (!location.state || !location.state.uid) {
+        if (location.state.uid.trim().length === 0) {
             navigate("/");
             return;
         }
@@ -86,9 +88,38 @@ const FileComplaint = () => {
     }, [userId]);
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(userLoginDetails.name);
+
+        if (title.trim().length != 0 || description.trim().length != 0 || date.trim().length != 0 
+        || time.trim().length != 0 || place.trim().length != 0) {
+
+        const notification = toast.loading("Filing Complaint");
+        try {
+
+            await fileComplaint({ args: [title, description, date, time, place] });
+            setTitle("");
+            setDescription("");
+            setDate("");
+            setPlace("");
+            setTime("");
+
+            await updateDoc(doc(db, `users/${userId}`), {
+                complaints: [...userLoginDetails.complaints, parseInt(nextId._hex, 16)]
+            })
+            toast.success(`Complaint Filed! Note Your ComplaintId:${nextId}`, {
+                id: notification,
+            });
+        } catch (err) {
+            toast.error("Whoops, something went wrong!", {
+                id: notification,
+            });
+            console.error("contract call failure", err.message);
+        }
+
+        } else {
+            toast.error("Please fill all the fields");
+        }
     }
 
 

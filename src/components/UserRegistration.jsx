@@ -4,9 +4,12 @@ import { auth } from './FirebaseInit'
 import { db } from './FirebaseInit'
 import { doc, setDoc } from 'firebase/firestore'
 import NavBar from './NavBar'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const UserRegistration = () => {
 
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
@@ -23,6 +26,7 @@ const UserRegistration = () => {
         if (name.trim().length !==0 || password.trim().length !==0 || email.trim().length !==0 || dob.trim().length !==0 
         || gender.trim().length !==0 || phone.trim().length !==0 || address.trim().length !==0 || aadhaar.trim().length !==0 || station.trim().length !==0) {
 
+            const notification = toast.loading("Please wait...");
             await createUserWithEmailAndPassword(auth, email, password)
             .then( async (userCredential) => {
                     const user = userCredential.user
@@ -36,13 +40,19 @@ const UserRegistration = () => {
                         phone: phone,
                         address: address,
                         aadhaar: aadhaar,
-                        station: station
+                        station: station,
+                        complaints: []
                     })
-                    alert('Registration Successful')
+                    toast.success(`Resgistration successfull!`, {
+                        id: notification,
+                    });
+                    navigate('/')
                 })
             .catch((error) => {
-                    alert(error.message)
-                })
+                toast.error("Whoops, something went wrong!", {
+                    id: notification,
+                });
+            })
         } else {
             alert('Please fill all fields')
         }

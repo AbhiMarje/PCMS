@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { auth } from './FirebaseInit'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import NavBar from './NavBar'
+import toast from 'react-hot-toast'
 
 const UserLogin = () => {
 
@@ -16,15 +17,21 @@ const UserLogin = () => {
 
         if (password.trim().length !==0 || email.trim().length !==0) {
 
+            const notification = toast.loading("Please wait...");
             await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                     const user = userCredential.user
                     console.log(user)
+                    toast.success(`Login successfull!`, {
+                        id: notification,
+                    });
                     navigate('/fileComplaint', {state: {uid: user.uid}});
             })
             .catch((error) => {
-                    alert(error.message)
-                })
+                toast.error("Whoops, something went wrong!", {
+                    id: notification,
+                });
+            })
         } else {
             alert('Please fill all fields')
         }
