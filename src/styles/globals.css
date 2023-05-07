@@ -1,0 +1,31 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: #53c9ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+body {
+  color: #0f1318;
+  background: #ffffff;
+}
+
+button:hover, a:hover {
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator { 
+  color-scheme: light;
+}
