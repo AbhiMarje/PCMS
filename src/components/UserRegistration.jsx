@@ -41,7 +41,8 @@ const UserRegistration = () => {
                         address: address,
                         aadhaar: aadhaar,
                         station: station,
-                        complaints: []
+                        complaints: [],
+                        metamaskId: ""
                     })
                     toast.success(`Resgistration successfull!`, {
                         id: notification,

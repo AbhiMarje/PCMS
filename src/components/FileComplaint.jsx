@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../styles/FileComplaintStyles.css'
 import PendingComplaints from './PendingComplaints';
-import { useContract, useContractRead, useContractWrite } from "@thirdweb-dev/react";
+import { useContract, useContractRead, useContractWrite, useAddress } from "@thirdweb-dev/react";
 import NavBar from './NavBar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { db } from './FirebaseInit';
@@ -14,6 +14,7 @@ const FileComplaint = () => {
 
     const location = useLocation();
     const navigate = useNavigate();
+    const address = useAddress();
     const [userId, setUserId] = useState("");
     const [userLoginDetails, setUserLoginDetails] = useState({
         aadhaar: "",
@@ -33,7 +34,7 @@ const FileComplaint = () => {
     const [time, setTime] = useState("");
     const [place, setPlace] = useState("");
 
-    const { contract } = useContract("0xA7245838b0018AFCDE70589E8Bf3aC7730De0309");
+    const { contract } = useContract("0x4079C43394EFD8a79008b2a0Bf825bc2B8F05A26");
     const { data: nextId } = useContractRead(contract, "nextId")
     const { mutateAsync: fileComplaint } = useContractWrite(contract, "fileComplaint");
 
@@ -63,7 +64,7 @@ const FileComplaint = () => {
 
 
     useEffect(() => {
-        if (location.state.uid.trim().length === 0) {
+        if (!location.state || !location.state.uid) {
             navigate("/");
             return;
         }
@@ -97,7 +98,7 @@ const FileComplaint = () => {
         const notification = toast.loading("Filing Complaint");
         try {
 
-            await fileComplaint({ args: [title, description, date, time, place] });
+            await fileComplaint({ args: [title, description, date, time, place, new Date().toLocaleString()] });
             setTitle("");
             setDescription("");
             setDate("");
@@ -105,7 +106,8 @@ const FileComplaint = () => {
             setTime("");
 
             await updateDoc(doc(db, `users/${userId}`), {
-                complaints: [...userLoginDetails.complaints, parseInt(nextId._hex, 16)]
+                complaints: [...userLoginDetails.complaints, parseInt(nextId._hex, 16)],
+                metamaskId: address
             })
             toast.success(`Complaint Filed! Note Your ComplaintId:${nextId}`, {
                 id: notification,
