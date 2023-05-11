@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import NavBar from './NavBar'
-import PendingComplaints from './PendingComplaints';
-import { useContract, useContractEvents, useContractRead, useContractWrite } from "@thirdweb-dev/react";
+import React, { useState } from 'react'
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 import toast from "react-hot-toast";
 import Card from 'react-bootstrap/Card';
 import { ConnectWallet } from "@thirdweb-dev/react";

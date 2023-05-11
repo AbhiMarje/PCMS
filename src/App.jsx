@@ -6,6 +6,7 @@ import UserRegistration from './components/UserRegistration';
 import FileComplaint from './components/FileComplaint';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ApprovePending from './components/ApprovePending';
+import Admin from './components/Admin';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/officerRegistration" element={<OfficerRegistration />} />
             <Route path="/fileComplaint" element = {<FileComplaint />} />
             <Route path='/approvePending' element={<ApprovePending />} />
+            <Route path='/admin' element={<Admin />} />
           </Routes>
       </BrowserRouter>
       </div>
