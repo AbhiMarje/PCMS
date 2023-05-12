@@ -4,6 +4,7 @@ import { auth } from './FirebaseInit'
 import { db } from './FirebaseInit'
 import { doc, setDoc } from 'firebase/firestore'
 import NavBar from './NavBar'
+import { useNavigate } from 'react-router-dom'
 
 const OfficerRegistration = () => {
 
@@ -14,6 +15,7 @@ const OfficerRegistration = () => {
     const [phone, setPhone] = useState('')
     const [post, setPost] = useState('')
     const [station, setStation] = useState('')
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -35,7 +37,8 @@ const OfficerRegistration = () => {
                         post: post,
                         station: station
                     })
-                    alert('Registration Successful')
+                    alert('Registration Successful');
+                    navigate("/officerLogin")
                 })
             .catch((error) => {
                     alert(error.message)
@@ -47,7 +50,7 @@ const OfficerRegistration = () => {
 
   return (
     <div>
-        <NavBar title = {"Officer Registration"}/>
+        <NavBar title = {"Officer Registration"} hideWallet = {true}/>
         <div className='vh-100 vw-100 d-flex justify-content-center'>
         <div className='w-25 mt-5 '>
             <form>

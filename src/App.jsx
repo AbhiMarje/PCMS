@@ -7,6 +7,9 @@ import FileComplaint from './components/FileComplaint';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ApprovePending from './components/ApprovePending';
 import Admin from './components/Admin';
+import PublicPage from './components/PublicPage';
+import Resolution from './components/Resolution';
+
 
 function App() {
   return (
@@ -20,6 +23,8 @@ function App() {
             <Route path="/fileComplaint" element = {<FileComplaint />} />
             <Route path='/approvePending' element={<ApprovePending />} />
             <Route path='/admin' element={<Admin />} />
+            <Route path = "/publicPage" element = {<PublicPage />}/>
+            <Route path = "/resolution" element = {<Resolution />}/>
           </Routes>
       </BrowserRouter>
       </div>

@@ -12,6 +12,8 @@
     width: 50%;
     float: left;
     padding: 2rem;
+    height: 100vh;
+    overflow: scroll;
 }
 
 .pendingApprovalDiv {
@@ -21,4 +23,5 @@
     height: 100vh;
     float: right;
     color: white;
+    overflow: scroll;
 }
