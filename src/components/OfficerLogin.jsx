@@ -20,7 +20,7 @@ const OfficerLogin = () => {
             .then((userCredential) => {
                     const user = userCredential.user
                     console.log(user)
-                    navigate('/officerRegistration')
+                    navigate('/approvePending')
             })
             .catch((error) => {
                     alert(error.message)
