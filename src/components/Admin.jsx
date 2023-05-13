@@ -17,7 +17,7 @@ const Admin = () => {
     const [user, setUser] = useState()
     const [officer, setofficer] = useState("")
     const [selectedDropDown, setSelectedDropDown] = useState("checkComplaint")
-    const { contract } = useContract("0x4079C43394EFD8a79008b2a0Bf825bc2B8F05A26");
+    const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
     const { mutateAsync: getComplaint } = useContractWrite(contract, "getComplaint")
     const { mutateAsync: getAllComplaints } = useContractWrite(contract, "getAllComplaints")
     const { mutateAsync: getAllPendingApprovalComplaints } = useContractWrite(contract, "getAllPendingApprovalComplaints")

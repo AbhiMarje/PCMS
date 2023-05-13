@@ -12,7 +12,7 @@ const ApprovePending = () => {
     const [searchedComplaint, setSearchedComplaint] = useState()
     const [allPendingComplaints, setAllPendingComplaints] = useState([[]])
     const [user, setUser] = useState()
-    const { contract } = useContract("0x4079C43394EFD8a79008b2a0Bf825bc2B8F05A26");
+    const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
     const { mutateAsync: getComplaint } = useContractWrite(contract, "getComplaint")
     const { mutateAsync: getAllPendingApprovalComplaints } = useContractWrite(contract, "getAllPendingApprovalComplaints")
     const { mutateAsync: approveComplaint } = useContractWrite(contract, "approveComplaint")
