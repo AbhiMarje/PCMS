@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card';
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from './FirebaseInit';
+import NavBar from './NavBar';
+import { Button } from 'react-bootstrap';
 
 const ApprovePending = () => {
 
@@ -146,17 +148,23 @@ const ApprovePending = () => {
         }
     }
 
+    const handleResolutionButton = () => {
+        navigate("/resolution");
+    }
+
+    const handlePublicPageButton = () => {
+        navigate("/publicPage");
+    }
   return (
     <div>
-        <nav className="navbar navbar-dark bg-primary justify-content-between">
-        <h3 className=' ps-4 text-light' >Pending Approval Complaints</h3>
-        <div className='d-flex flex-direction-row'>
-            <button className="btn btn-light my-2 my-sm-0 me-3" onClick={handleFetch}>Fetch complaints</button>
+        <nav className="navbar navbar-dark bg-primary">
+            <h3 className=' ps-4 text-light' >Approve Pending</h3>
+            <Button onClick = {handleResolutionButton}>Resolution</Button>
+            <Button onClick = {handlePublicPageButton}>Public Page</Button>
             <div className='pe-4'>
-            <ConnectWallet accentColor='black' colorMode='light' />
+                <ConnectWallet accentColor='black' colorMode='light' /> 
             </div>
-        </div>
-        </nav>
+         </nav>
         <div className='d-flex flex-column align-items-center w-100 mt-5 '>
             <section className='w-50 shadow p-3 mb-5 bg-white rounded'>
                 <form className='d-flex align-items-center flex-column'>

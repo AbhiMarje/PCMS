@@ -25,6 +25,7 @@ const UserLogin = () => {
                     toast.success(`Login successfull!`, {
                         id: notification,
                     });
+                   
                     navigate('/fileComplaint', {state: {uid: user.uid}});
             })
             .catch((error) => {
@@ -39,7 +40,7 @@ const UserLogin = () => {
 
   return (
     <div>
-       <NavBar title = {"User Login"}/>
+       <NavBar title = {"User Login"} hideWallet = {true}/>
         <div className='vh-100 vw-100 d-flex justify-content-center'>
             <div className='w-25 mt-5'>
                 <form>

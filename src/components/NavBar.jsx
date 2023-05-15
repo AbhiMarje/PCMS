@@ -1,12 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { ConnectWallet } from "@thirdweb-dev/react";
 
-const NavBar = (prop) => {
+const NavBar = (props) => {
   return (
-    <nav className="navbar navbar-dark bg-primary justify-content-between">
-        <h3 className=' ps-4 text-light' >{prop.title}</h3>
+    <nav className="navbar navbar-dark bg-primary">
+        <h3 className=' ps-4 text-light' >{props.title}</h3>
+      
         <div className='pe-4'>
-          <ConnectWallet accentColor='black' colorMode='light' />
+          {props.hideWallet ?  "" : <ConnectWallet accentColor='black' colorMode='light' />  }
         </div>
     </nav>
   )

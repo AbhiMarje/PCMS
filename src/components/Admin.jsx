@@ -5,6 +5,8 @@ import Card from 'react-bootstrap/Card';
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from './FirebaseInit';
+import NavBar from './NavBar';
+import { Button } from 'react-bootstrap';
 
 const Admin = () => {
 
@@ -14,7 +16,7 @@ const Admin = () => {
     const [allPendingComplaints, setAllPendingComplaints] = useState([[]])
     const [allPendingResolutionComplaints, setAllPendingResolutionComplaints] = useState([[]])
     const [allResolvedComplaints, setAllResolvedComplaints] = useState([[]])
-    const [user, setUser] = useState()
+    const [user, setUser] = useState();
     const [officer, setofficer] = useState("")
     const [selectedDropDown, setSelectedDropDown] = useState("checkComplaint")
     const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
@@ -276,13 +278,11 @@ const Admin = () => {
 
   return (
     <div>
-        <nav className="navbar navbar-dark bg-primary justify-content-between">
-        <h3 className=' ps-4 text-light' >PCMS</h3>
-        <div className='d-flex flex-direction-row'>
+        <nav className="navbar navbar-dark bg-primary">
+            <h3 className=' ps-4 text-light' >Admin</h3>
             <div className='pe-4'>
-            <ConnectWallet accentColor='black' colorMode='light' />
+                <ConnectWallet accentColor='black' colorMode='light' /> 
             </div>
-        </div>
         </nav>
         <div className='d-flex flex-column align-items-center w-100 mt-5 '>
             <section className='w-50 shadow p-3 bg-white rounded'>

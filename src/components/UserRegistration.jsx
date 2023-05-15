@@ -6,6 +6,8 @@ import { doc, setDoc } from 'firebase/firestore'
 import NavBar from './NavBar'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+import { ConnectWallet } from '@thirdweb-dev/react'
 
 const UserRegistration = () => {
 
@@ -45,6 +47,7 @@ const UserRegistration = () => {
                         metamaskId: "",
                         type: "user"
                     })
+
                     toast.success(`Resgistration successfull!`, {
                         id: notification,
                     });
@@ -60,9 +63,19 @@ const UserRegistration = () => {
         }
     }
 
+    const handlePublicPageButton = () => {
+        navigate("/publicPage")
+    }
+
   return (
     <div>
-        <NavBar title = {"User Registration"}/>
+         <nav className="navbar navbar-dark bg-primary">
+            <h3 className=' ps-4 text-light' >User Registration</h3>
+            <Button onClick={handlePublicPageButton}>Public Page</Button>
+            <div className='pe-4'>
+                <ConnectWallet accentColor='black' colorMode='light' /> 
+            </div>
+        </nav>
         <div className='vh-100 vw-100 d-flex justify-content-center'>
         <div className='w-25 mt-5 '>
             <form>
