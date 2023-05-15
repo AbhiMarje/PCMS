@@ -6,6 +6,8 @@ import Card from 'react-bootstrap/Card';
 import { collection, getDoc, getDocs, query, where, doc } from "firebase/firestore";
 import { db } from './FirebaseInit';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ConnectWallet } from '@thirdweb-dev/react';
+import { Button } from 'react-bootstrap';
 
 const Resolution = () => {
     
@@ -163,18 +165,18 @@ const Resolution = () => {
            console.log(tempUserData);
         }
 
-        const getComplaintIds = async () => {
-            try {    
-                const data = await getAllComplaints([]);
-                console.info("contract call success ", data.receipt.events);
-            } catch(err) {
-                console.log(err);
-                return;
-            }
-        }
+        // const getComplaintIds = async () => {
+        //     try {    
+        //         const data = await getAllComplaints([]);
+        //         console.info("contract call success ", data.receipt.events);
+        //     } catch(err) {
+        //         console.log(err);
+        //         return;
+        //     }
+        // }
         
         getUserDetails();
-        getComplaintIds();
+        // getComplaintIds();
     }, [])  
 
     useEffect(() => {
@@ -182,16 +184,42 @@ const Resolution = () => {
         console.log(user.type);
     }, [user]);
     
+    const handleResolutionButton = () => {
+        navigate("/approvePending",  {state: {uid: location.state.uid}});
+    }
+
+    const handlePublicPageButton = () => {
+        navigate("/publicPage");
+    }
+
+    const handleAdminPageButton = () => {
+        navigate("/admin", {state: {uid: location.state.uid}});
+    }
+
+    const handleFileComplaintsButton = () => {
+        navigate("/fileComplaint", {state: {uid: location.state.uid}});
+    }
 
   return (
     <>
-        <NavBar title = "Resolution" hideWallet = {false}/>
+        <nav className="navbar navbar-dark bg-primary">
+            <h3 className=' ps-4 text-light' >Add Resolution</h3>
+            <div>
+            <Button onClick = {handleResolutionButton}>Approve Complaints</Button>
+            <Button onClick = {handlePublicPageButton}>Public Page</Button>
+            <Button onClick = {handleAdminPageButton}>Admin Page</Button>
+            <Button onClick = {handleFileComplaintsButton}>File Complaint</Button>
+            </div>
+            <div className='pe-4'>
+                <ConnectWallet accentColor='black' colorMode='light' /> 
+            </div>
+         </nav>
         <div className='d-flex flex-column align-items-center w-100 mt-5 '>
             <section className='w-50 shadow p-3 bg-white rounded'>
                 <select className="custom-select w-100 mb-3 p-2 text-dark bg-light" value={selectedDropDown} onChange={(e) => setSelectedDropDown(e.target.value)}>
                     <option value="checkComplaint">Check Complaint Details</option>
                     <option value="getAllComplaints">Get All Complaints</option>
-                    <option value="addResolution">Add Resolution</option>
+                    <option value="addResolution">Add Resolution/ Update Complaint</option>
                 </select>
                 {selectedDropDown == "checkComplaint" ? (
                     <form className='d-flex align-items-center flex-column'>
@@ -223,7 +251,7 @@ const Resolution = () => {
                                 <label htmlFor="no">NO</label>
                                 </div> 
                                 <div className='d-flex align-items-center flex-column'>
-                                    <button className='btn btn-primary pe-4 ps-4' onClick={handleAddResolution}>Resolve</button>
+                                    <button className='btn btn-primary pe-4 ps-4' onClick={handleAddResolution}>Add Resolution</button>
                                  </div>
                             </>
                             

@@ -7,9 +7,12 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from './FirebaseInit';
 import NavBar from './NavBar';
 import { Button } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ApprovePending = () => {
 
+    const navigate = useNavigate();
+    const location = useLocation();
     const [inputId, setInputId] = useState("")
     const [searchedComplaint, setSearchedComplaint] = useState()
     const [allPendingComplaints, setAllPendingComplaints] = useState([[]])
@@ -149,7 +152,7 @@ const ApprovePending = () => {
     }
 
     const handleResolutionButton = () => {
-        navigate("/resolution");
+        navigate("/resolution",  {state: {uid: location.state.uid}});
     }
 
     const handlePublicPageButton = () => {
@@ -159,10 +162,15 @@ const ApprovePending = () => {
     <div>
         <nav className="navbar navbar-dark bg-primary">
             <h3 className=' ps-4 text-light' >Approve Pending</h3>
+            <div>
             <Button onClick = {handleResolutionButton}>Resolution</Button>
             <Button onClick = {handlePublicPageButton}>Public Page</Button>
-            <div className='pe-4'>
-                <ConnectWallet accentColor='black' colorMode='light' /> 
+            </div>
+            <div className='d-flex flex-direction-row'>
+                <button className="btn btn-light my-2 my-sm-0 me-3" onClick={handleFetch}>Fetch complaints</button>
+                <div className='pe-4'>
+                <ConnectWallet accentColor='black' colorMode='light' />
+                </div>
             </div>
          </nav>
         <div className='d-flex flex-column align-items-center w-100 mt-5 '>

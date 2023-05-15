@@ -34,7 +34,7 @@ const FileComplaint = () => {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [place, setPlace] = useState("");
-    const { contract } = useContract("0x4079C43394EFD8a79008b2a0Bf825bc2B8F05A26");
+    const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
     const { data: nextId } = useContractRead(contract, "nextId");
     const { mutateAsync: fileComplaint } = useContractWrite(contract, "fileComplaint");
     const [filedComplaintsIds, setFiledComplaintsIds] = useState([]);
@@ -150,11 +150,19 @@ const FileComplaint = () => {
         navigate("/resolution", {state: {uid: location.state.uid}});
     }
 
+    const handlePublicPageButton = () => {
+        navigate("/publicPage");
+    }
+
+
     return (
         <>
             <nav className="navbar navbar-dark bg-primary">
                 <h3 className=' ps-4 text-light' >File Complaint</h3>
-                <Button onClick={handleResolutionButton}>Resolution</Button>
+                <div>
+                <Button onClick={handleResolutionButton}>Update Complaint</Button>
+                <Button onClick={handlePublicPageButton}>Public Page</Button>
+                </div>
                 <div className='pe-4'>
                     <ConnectWallet accentColor='black' colorMode='light' /> 
                 </div>
@@ -218,7 +226,7 @@ const FileComplaint = () => {
 
                 <div className='pendingApprovalDiv'>
                     <div className='d-flex flex-column align-items-center w-100 mt-5 '>
-                        <section className='w-50 shadow p-3 bg-white rounded'>
+                        <section className='w-75 shadow p-3 bg-white rounded'>
                             <div>
                                 <select className="custom-select w-100 mb-3 p-2 text-dark bg-light" value={selectedDropDown} onChange={(e) => setSelectedDropDown(e.target.value)}>
                                     <option value="checkComplaint">--Select ID--</option>
@@ -235,7 +243,7 @@ const FileComplaint = () => {
                     {searchedComplaint && user ?
                         <div className='d-flex flex-column align-items-center mt-5'>
                             <h3>Complaint Details</h3>
-                            <div className='w-50' style={{ margin: '1rem', color: "black" }}>
+                            <div className='w-75' style={{ margin: '1rem', color: "black" }}>
                                 <div className='w-100 shadow p-4 mb-1 bg-white rounded '>
                                     <div className='w-100 d-flex justify-content-between'>
                                         <Card.Title>{searchedComplaint.title}</Card.Title>

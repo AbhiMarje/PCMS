@@ -82,17 +82,17 @@ const PublicPage = () => {
   }
  
   useEffect(() => {
-    const getComplaintIds = async () => {
-        try {    
-            const data = await getAllComplaints([]);
-            console.info("contract call success ", data.receipt.events);
-        } catch(err) {
-            console.log(err);
-            return;
-        }
-    }
+    // const getComplaintIds = async () => {
+    //     try {    
+    //         const data = await getAllComplaints([]);
+    //         console.info("contract call success ", data.receipt.events);
+    //     } catch(err) {
+    //         console.log(err);
+    //         return;
+    //     }
+    // }
     
-      getComplaintIds();
+    //   getComplaintIds();
   }, [])
   
   return (

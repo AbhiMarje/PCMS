@@ -7,9 +7,12 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from './FirebaseInit';
 import NavBar from './NavBar';
 import { Button } from 'react-bootstrap';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Admin = () => {
 
+    const location = useLocation();
+    const navigate = useNavigate();
     const [inputId, setInputId] = useState("")
     const [searchedComplaint, setSearchedComplaint] = useState()
     const [allComplaints, setAllComplaints] = useState([[]])
@@ -276,14 +279,31 @@ const Admin = () => {
         }
     }
 
+    const handleResolutionButton = () => {
+        navigate("/resolution",  {state: {uid: location.state.uid}});
+    }
+
+    const handlePublicPageButton = () => {
+        navigate("/publicPage");
+    }
+
+    const handleAdminPageButton = () => {
+        navigate("/approvePending", {state: {uid: location.state.uid}});
+    }
+
   return (
     <div>
         <nav className="navbar navbar-dark bg-primary">
-            <h3 className=' ps-4 text-light' >Admin</h3>
+            <h3 className=' ps-4 text-light' >Admin Page</h3>
+            <div>
+            <Button onClick = {handleResolutionButton}>Add Resolution</Button>
+            <Button onClick = {handlePublicPageButton}>Public Page</Button>
+            <Button onClick = {handleAdminPageButton}>Approve Complaints</Button>
+            </div>
             <div className='pe-4'>
                 <ConnectWallet accentColor='black' colorMode='light' /> 
             </div>
-        </nav>
+         </nav>
         <div className='d-flex flex-column align-items-center w-100 mt-5 '>
             <section className='w-50 shadow p-3 bg-white rounded'>
                 <select className="custom-select w-100 mb-3 p-2 text-dark bg-light" value={selectedDropDown} onChange={(e) => setSelectedDropDown(e.target.value)}>
