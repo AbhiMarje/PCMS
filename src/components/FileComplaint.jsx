@@ -42,6 +42,7 @@ const FileComplaint = () => {
     const [searchedComplaint, setSearchedComplaint] = useState();
     const { mutateAsync: getComplaint } = useContractWrite(contract, "getComplaint");
     const [user, setUser] = useState();
+    const [isSaveButtonClicked, setIsSaveButtonClicked] = useState(false);
 
     useEffect(() => {
 
@@ -59,7 +60,7 @@ const FileComplaint = () => {
         }
 
         getUserDetails();
-    }, []);
+    }, [isSaveButtonClicked]);
 
     useEffect(() => {
 
@@ -101,6 +102,8 @@ const FileComplaint = () => {
                 toast.success(`Complaint Filed! Note Your ComplaintId:${nextId}`, {
                     id: notification,
                 });
+
+                setIsSaveButtonClicked(!isSaveButtonClicked);
             } catch (err) {
                 toast.error("Whoops, something went wrong!", {
                     id: notification,
@@ -132,7 +135,7 @@ const FileComplaint = () => {
 
         setSearchedComplaint()
 
-        if(setSelectedDropDown === "--Select ID--") return;
+        if(selectedDropDown === "--Select ID--") return;
 
         const notification = toast.loading("Searching...")
         const data = await getComplaint({ args: [selectedDropDown] });
