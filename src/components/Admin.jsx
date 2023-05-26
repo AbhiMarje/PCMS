@@ -60,7 +60,7 @@ const Admin = () => {
 
             } catch (err) {
                 console.error("contract call failure", err);
-                toast.error("Failed to add new officer", {
+                toast.error(err.reason, {
                     id: notification
                 });
             }
@@ -409,44 +409,6 @@ const Admin = () => {
             </div>
         </div>
         : ""}
-        {allComplaints.length > 1 ? 
-        <div className='d-flex flex-column align-items-center mt-5'>
-        <h3>All Complaint</h3>
-        {allComplaints.map((complaint, index) => {
-            return (
-                complaint.length > 1 ? 
-                    <div className='w-50' style={{ margin: '1rem' , color: "black"}}  key={index}>
-                        <div className='w-100 shadow p-4 mb-1 bg-white rounded '>
-                            <div className='w-100 d-flex justify-content-between'>
-                                <Card.Title>{complaint.title}</Card.Title>
-                                <div>
-                                    <span style={{fontWeight: "bold"}}>ID: {parseInt(complaint.id._hex, 16)}</span>
-                                </div>
-                            </div>
-                            <Card.Subtitle className="mb-2 mt-1 text-muted">{complaint.description}</Card.Subtitle>
-                            <Card.Text className='mt-4'>
-                                <span style={{fontWeight: "bold"}}>Remarks: </span>
-                                <div>
-                                    {complaint.resolutionRemark.map((remark, index) => {
-                                        return (
-                                            <div key={index} className='d-flex flex-row justify-content-between mt-2'>
-                                                <span className='fw-light'>{remark}</span>
-                                                <span className='fw-lighter me-4'>{complaint.resolutionDates[index]}</span>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </Card.Text>
-                            <Card.Text>
-                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isResolved ? "Closed" : complaint.isApproved ? "Approved" : "Pending Approval"}
-                            </Card.Text>
-                        </div>
-                    </div>
-                : ""
-            )
-        })}
-        </div>
-        : ""}
         {allPendingComplaints.length > 1 ? 
         <div className='d-flex flex-column align-items-center mt-5'>
         <h3>Pending Approval Complaint</h3>
@@ -553,6 +515,44 @@ const Admin = () => {
                             </Card.Text>
                             <Card.Text>
                                 <span style={{fontWeight: "bold"}}>Status: </span> {resolvedComplaint.isResolved ? "Resolved" : !resolvedComplaint.exists ? "Closed" : "Pending Resolution"}
+                            </Card.Text>
+                        </div>
+                    </div>
+                : ""
+            )
+        })}
+        </div>
+        : ""}
+        {allComplaints.length > 1 ? 
+        <div className='d-flex flex-column align-items-center mt-5'>
+        <h3>All Complaint</h3>
+        {allComplaints.map((complaint, index) => {
+            return (
+                complaint.length > 1 ? 
+                    <div className='w-50' style={{ margin: '1rem' , color: "black"}}  key={index}>
+                        <div className='w-100 shadow p-4 mb-1 bg-white rounded '>
+                            <div className='w-100 d-flex justify-content-between'>
+                                <Card.Title>{complaint.title}</Card.Title>
+                                <div>
+                                    <span style={{fontWeight: "bold"}}>ID: {parseInt(complaint.id._hex, 16)}</span>
+                                </div>
+                            </div>
+                            <Card.Subtitle className="mb-2 mt-1 text-muted">{complaint.description}</Card.Subtitle>
+                            <Card.Text className='mt-4'>
+                                <span style={{fontWeight: "bold"}}>Remarks: </span>
+                                <div>
+                                    {complaint.resolutionRemark.map((remark, index) => {
+                                        return (
+                                            <div key={index} className='d-flex flex-row justify-content-between mt-2'>
+                                                <span className='fw-light'>{remark}</span>
+                                                <span className='fw-lighter me-4'>{complaint.resolutionDates[index]}</span>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </Card.Text>
+                            <Card.Text>
+                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isResolved ? "Closed" : complaint.isApproved ? "Approved" : "Pending Approval"}
                             </Card.Text>
                         </div>
                     </div>
