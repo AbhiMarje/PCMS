@@ -8,6 +8,7 @@ import { db } from './FirebaseInit';
 import NavBar from './NavBar';
 import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getAuth, signOut } from 'firebase/auth';
 
 const ApprovePending = () => {
 
@@ -159,6 +160,21 @@ const ApprovePending = () => {
         navigate("/publicPage");
     }
 
+    const handleLogout = () => {
+
+        const notification = toast.loading("Logging Out");
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            navigate("/");
+            toast.success("Logged out successfully!", {
+                id: notification
+            })
+        }).catch((error) => {
+            
+            toast.error("Something went wrong!");
+        });
+    }
+
     useEffect(() => {
 
         if (location.state === null || location.state.uid.trim().length === 0) {
@@ -167,7 +183,7 @@ const ApprovePending = () => {
         }
 
         const getUserDetails = async () => {
-            
+
            const tempUserData = await getDoc(doc(db, `users/${location.state.uid}`));
            if(tempUserData.exists()) {
                 navigate("/fileCompaint", {state:{uid: location.state.uid}});
@@ -190,6 +206,9 @@ const ApprovePending = () => {
                 <div className='pe-4'>
                 <ConnectWallet accentColor='black' colorMode='light' />
                 </div>
+            </div>
+            <div className='pe-4'>
+                <button type="button" class="btn btn-danger" onClick={handleLogout}>Logout</button>
             </div>
          </nav>
         <div className='d-flex flex-column align-items-center w-100 mt-5 '>
