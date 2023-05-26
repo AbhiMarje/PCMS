@@ -34,7 +34,7 @@ const FileComplaint = () => {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [place, setPlace] = useState("");
-    const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
+    const { contract } = useContract("0x1322FA1E68c949939EDaF562762F474D75B7584e");
     const { data: nextId } = useContractRead(contract, "nextId");
     const { mutateAsync: fileComplaint } = useContractWrite(contract, "fileComplaint");
     const [filedComplaintsIds, setFiledComplaintsIds] = useState([]);
@@ -162,7 +162,7 @@ const FileComplaint = () => {
         <>
             <nav className="navbar navbar-dark bg-primary">
                 <h3 className=' ps-4 text-light' >File Complaint</h3>
-                <div>
+                <div style={{flex: 'auto', paddingLeft: '10px'}}>
                 <Button onClick={handleResolutionButton}>Update Complaint</Button>
                 <Button onClick={handlePublicPageButton}>Public Page</Button>
                 </div>
@@ -287,7 +287,7 @@ const FileComplaint = () => {
                                         </div>
                                     </Card.Text>
                                     <Card.Text>
-                                        <span style={{ fontWeight: "bold" }}>Status: </span> {searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
+                                        <span style={{ fontWeight: "bold" }}>Status: </span> {searchedComplaint.isResolved ? "Closed" : searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
                                     </Card.Text>
                                 </div>
                             </div>

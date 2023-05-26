@@ -22,7 +22,7 @@ const Admin = () => {
     const [user, setUser] = useState();
     const [officer, setofficer] = useState("")
     const [selectedDropDown, setSelectedDropDown] = useState("checkComplaint")
-    const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
+    const { contract } = useContract("0x1322FA1E68c949939EDaF562762F474D75B7584e");
     const { mutateAsync: getComplaint } = useContractWrite(contract, "getComplaint")
     const { mutateAsync: getAllComplaints } = useContractWrite(contract, "getAllComplaints")
     const { mutateAsync: getAllPendingApprovalComplaints } = useContractWrite(contract, "getAllPendingApprovalComplaints")
@@ -295,10 +295,10 @@ const Admin = () => {
     <div>
         <nav className="navbar navbar-dark bg-primary">
             <h3 className=' ps-4 text-light' >Admin Page</h3>
-            <div>
+            <div style={{flex: 'auto', paddingLeft: '10px'}}>
+            <Button onClick = {handleAdminPageButton}>Approve Complaints</Button>
             <Button onClick = {handleResolutionButton}>Add Resolution</Button>
             <Button onClick = {handlePublicPageButton}>Public Page</Button>
-            <Button onClick = {handleAdminPageButton}>Approve Complaints</Button>
             </div>
             <div className='pe-4'>
                 <ConnectWallet accentColor='black' colorMode='light' /> 
@@ -397,7 +397,7 @@ const Admin = () => {
                         </div>
                     </Card.Text>
                     <Card.Text>
-                        <span style={{fontWeight: "bold"}}>Status: </span> {searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
+                        <span style={{fontWeight: "bold"}}>Status: </span> {searchedComplaint.isResolved ? "Closed" : searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
                     </Card.Text>
                     {searchedComplaint.isApproved ? "" : (
                     <div className='d-flex'>
@@ -438,7 +438,7 @@ const Admin = () => {
                                 </div>
                             </Card.Text>
                             <Card.Text>
-                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isApproved ? "Approved" : !complaint.exists ? "Closed" : "Pending Approval"}
+                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isResolved ? "Closed" : complaint.isApproved ? "Approved" : "Pending Approval"}
                             </Card.Text>
                         </div>
                     </div>
@@ -476,7 +476,7 @@ const Admin = () => {
                                 </div>
                             </Card.Text>
                             <Card.Text>
-                                <span style={{fontWeight: "bold"}}>Status: </span> {pendingComplaint.isApproved ? "Approved" : !pendingComplaint.exists ? "Declined" : "Pending Approval"}
+                                <span style={{fontWeight: "bold"}}>Status: </span> {pendingComplaint.isResolved? "Closed" : pendingComplaint.isApproved ? "Approved" : !pendingComplaint.exists ? "Declined" : "Pending Approval"}
                             </Card.Text>
                         </div>
                     </div>

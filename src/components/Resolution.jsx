@@ -18,7 +18,7 @@ const Resolution = () => {
     const [allComplaints, setAllComplaints] = useState([]);
     const [searchedComplaint, setSearchedComplaint] = useState();
     const [selectedDropDown, setSelectedDropDown] = useState("checkComplaint");
-    const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
+    const { contract } = useContract("0x1322FA1E68c949939EDaF562762F474D75B7584e");
     const { mutateAsync: getComplaint } = useContractWrite(contract, "getComplaint");
     const { mutateAsync: getAllComplaints } = useContractWrite(contract, "getAllComplaints");
     const { mutateAsync: resolveComplaint } = useContractWrite(contract, "resolveComplaint");
@@ -151,13 +151,10 @@ const Resolution = () => {
         const getUserDetails = async () => {
 
            const tempUserData = await getDoc(doc(db, `users/${location.state.uid}`));
-            
            if(!tempUserData.exists()) {
-
                 const tempOfficerData = await getDoc(doc(db, `officers/${location.state.uid}`));
                 if(tempOfficerData.exists())
                     setUserType("officer");
-                console.log(tempUserData);
            } else {
                 setUserType("user");
            }
@@ -165,24 +162,8 @@ const Resolution = () => {
            console.log(tempUserData);
         }
 
-        // const getComplaintIds = async () => {
-        //     try {    
-        //         const data = await getAllComplaints([]);
-        //         console.info("contract call success ", data.receipt.events);
-        //     } catch(err) {
-        //         console.log(err);
-        //         return;
-        //     }
-        // }
-        
         getUserDetails();
-        // getComplaintIds();
     }, [])  
-
-    useEffect(() => {
-        if(user)
-        console.log(user.type);
-    }, [user]);
     
     const handleResolutionButton = () => {
         navigate("/approvePending",  {state: {uid: location.state.uid}});
@@ -204,11 +185,11 @@ const Resolution = () => {
     <>
         <nav className="navbar navbar-dark bg-primary">
             <h3 className=' ps-4 text-light' >Add Resolution</h3>
-            <div>
-            <Button onClick = {handleResolutionButton}>Approve Complaints</Button>
-            <Button onClick = {handlePublicPageButton}>Public Page</Button>
-            <Button onClick = {handleAdminPageButton}>Admin Page</Button>
-            <Button onClick = {handleFileComplaintsButton}>File Complaint</Button>
+            <div style={{flex: 'auto', paddingLeft: '10px'}}>
+            {userType === "officer" && <Button onClick = {handleResolutionButton}>Approve Complaints</Button>}
+            {userType === "user" && <Button onClick = {handlePublicPageButton}>Public Page</Button>}
+            {userType === "officer" && <Button onClick = {handleAdminPageButton}>Admin Page</Button>}
+            {userType === "user" && <Button onClick = {handleFileComplaintsButton}>File Complaint</Button>}
             </div>
             <div className='pe-4'>
                 <ConnectWallet accentColor='black' colorMode='light' /> 
@@ -312,7 +293,7 @@ const Resolution = () => {
                         </div>
                     </Card.Text>
                     <Card.Text>
-                        <span style={{fontWeight: "bold"}}>Status: </span> {searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
+                        <span style={{fontWeight: "bold"}}>Status: </span> {searchedComplaint.isResolved ? "Closed" : searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
                     </Card.Text>
                 </div>
             </div>
@@ -347,7 +328,7 @@ const Resolution = () => {
                                 </div>
                             </Card.Text>
                             <Card.Text>
-                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isApproved ? "Approved" : !complaint.exists ? "Closed" : "Pending Approval"}
+                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isResolved? "Closed" : complaint.isApproved ? "Approved" : "Pending Approval"}
                             </Card.Text>
                         </div>
                     </div>

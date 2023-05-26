@@ -45,7 +45,7 @@ const OfficerLogin = () => {
                     <input type="password" className="form-control" id="exampleInputPassword1" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <a href="/" className="d-flex justify-content-start">Not an officer? Login as an User.</a>
-                <a href="/officerRegistration" className="d-flex mt-1 justify-content-start">New User? Create account.</a>
+                <a href="/officerRegistration" className="d-flex mt-1 justify-content-start">New Officer? Create account.</a>
                 <button type="submit" className="btn btn-primary mt-3" onClick={handleSubmit} >Login</button>
                 </form>
             </div>

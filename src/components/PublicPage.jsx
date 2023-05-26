@@ -13,7 +13,7 @@ const PublicPage = () => {
   const [allComplaints, setAllComplaints] = useState([]);
   const [searchedComplaint, setSearchedComplaint] = useState();
   const [selectedDropDown, setSelectedDropDown] = useState("checkComplaint");
-  const { contract } = useContract("0x20Ad6764b9C021410F2CF518D2537FC2bBCfa336");
+  const { contract } = useContract("0x1322FA1E68c949939EDaF562762F474D75B7584e");
   const { mutateAsync: getComplaint } = useContractWrite(contract, "getComplaint");
   const { mutateAsync: getAllComplaints } = useContractWrite(contract, "getAllComplaints");
 
@@ -80,20 +80,6 @@ const PublicPage = () => {
         console.error("contract call failure", err);
     }
   }
- 
-  useEffect(() => {
-    // const getComplaintIds = async () => {
-    //     try {    
-    //         const data = await getAllComplaints([]);
-    //         console.info("contract call success ", data.receipt.events);
-    //     } catch(err) {
-    //         console.log(err);
-    //         return;
-    //     }
-    // }
-    
-    //   getComplaintIds();
-  }, [])
   
   return (
     <>
@@ -165,7 +151,7 @@ const PublicPage = () => {
                         </div>
                     </Card.Text>
                     <Card.Text>
-                        <span style={{fontWeight: "bold"}}>Status: </span> {searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
+                        <span style={{fontWeight: "bold"}}>Status: </span> {searchedComplaint.isResolved ? "Closed" : searchedComplaint.isApproved ? "Approved" : !searchedComplaint.exists ? "Declined" : "Pending Approval"}
                     </Card.Text>
                     {searchedComplaint.isApproved ? "" : (
                     <div className='d-flex'>
@@ -206,7 +192,7 @@ const PublicPage = () => {
                                 </div>
                             </Card.Text>
                             <Card.Text>
-                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isApproved ? "Approved" : !complaint.exists ? "Closed" : "Pending Approval"}
+                                <span style={{fontWeight: "bold"}}>Status: </span> {complaint.isResolved ? "Closed" : complaint.isApproved ? "Approved" : "Pending Approval"}
                             </Card.Text>
                         </div>
                     </div>
