@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useContract, useContractWrite } from "@thirdweb-dev/react";
 import toast from "react-hot-toast";
 import Card from 'react-bootstrap/Card';
 import { ConnectWallet } from "@thirdweb-dev/react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from './FirebaseInit';
 import NavBar from './NavBar';
 import { Button } from 'react-bootstrap';
@@ -158,6 +158,25 @@ const ApprovePending = () => {
     const handlePublicPageButton = () => {
         navigate("/publicPage");
     }
+
+    useEffect(() => {
+
+        if (location.state === null || location.state.uid.trim().length === 0) {
+            navigate("/");
+            return;
+        }
+
+        const getUserDetails = async () => {
+            
+           const tempUserData = await getDoc(doc(db, `users/${location.state.uid}`));
+           if(tempUserData.exists()) {
+                navigate("/fileCompaint", {state:{uid: location.state.uid}});
+           } 
+        }
+
+        getUserDetails();
+    }, [])  
+
   return (
     <div>
         <nav className="navbar navbar-dark bg-primary">
