@@ -10,7 +10,8 @@ import toast from 'react-hot-toast';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { ConnectWallet } from '@thirdweb-dev/react';
-import { getAuth, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
+import { auth } from './FirebaseInit';
 
 const FileComplaint = () => {
 
@@ -62,6 +63,14 @@ const FileComplaint = () => {
 
         getUserDetails();
     }, [isSaveButtonClicked]);
+
+    useEffect(() => {
+
+        if (!auth.currentUser || location.state === null || location.state.uid.trim().length === 0) {
+            navigate("/");
+            return;
+        }
+    }, [])
 
     useEffect(() => {
 
@@ -161,7 +170,7 @@ const FileComplaint = () => {
     const handleLogout = () => {
 
         const notification = toast.loading("Logging Out");
-        const auth = getAuth();
+        
         signOut(auth).then(() => {
             navigate("/");
             toast.success("Logged out successfully!", {

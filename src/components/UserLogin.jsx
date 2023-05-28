@@ -21,7 +21,6 @@ const UserLogin = () => {
             await signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                     const user = userCredential.user
-                    console.log(user)
                     toast.success(`Login successfull!`, {
                         id: notification,
                     });

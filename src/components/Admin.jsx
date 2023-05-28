@@ -5,10 +5,10 @@ import Card from 'react-bootstrap/Card';
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from './FirebaseInit';
-import NavBar from './NavBar';
 import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getAuth, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
+import { auth } from './FirebaseInit';
 
 const Admin = () => {
 
@@ -295,7 +295,6 @@ const Admin = () => {
     const handleLogout = () => {
 
         const notification = toast.loading("Logging Out");
-        const auth = getAuth();
         signOut(auth).then(() => {
             navigate("/");
             toast.success("Logged out successfully!", {
@@ -309,7 +308,7 @@ const Admin = () => {
 
     useEffect(() => {
 
-        if (location.state === null || location.state.uid.trim().length === 0) {
+        if (!auth.currentUser || location.state === null || location.state.uid.trim().length === 0) {
             navigate("/");
             return;
         }

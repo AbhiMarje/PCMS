@@ -8,7 +8,8 @@ import { db } from './FirebaseInit';
 import NavBar from './NavBar';
 import { Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getAuth, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
+import { auth } from './FirebaseInit';
 
 const ApprovePending = () => {
 
@@ -163,7 +164,6 @@ const ApprovePending = () => {
     const handleLogout = () => {
 
         const notification = toast.loading("Logging Out");
-        const auth = getAuth();
         signOut(auth).then(() => {
             navigate("/");
             toast.success("Logged out successfully!", {
@@ -177,7 +177,7 @@ const ApprovePending = () => {
 
     useEffect(() => {
 
-        if (location.state === null || location.state.uid.trim().length === 0) {
+        if (!auth.currentUser || location.state === null || location.state.uid.trim().length === 0) {
             navigate("/");
             return;
         }
